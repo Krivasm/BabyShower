@@ -257,7 +257,7 @@
             </div>
 
             <p class="mt-6 text-sm text-gray-700 italic font-serif px-4 leading-relaxed font-semibold">
-                "Mientras Dios termina de formarme en la pancita de mi mami, ya estoy iluminando cada rincón de sus corazones de mis papitos y esperan felices mi llegada."
+                "Mientras Dios termina de formarme en la pancita de mi mami, ya estoy iluminando cada rincón de los corazones de mis papitos y esperan felices mi llegada."
             </p>
         </section>
 
@@ -403,13 +403,56 @@
         // Inicializar Iconos Lucide
         lucide.createIcons();
 
-        // Lógica de apertura del sobre
+        // Lógica de apertura del sobre y auto-scroll
         document.addEventListener('DOMContentLoaded', () => {
             const introScreen = document.getElementById('intro-screen');
             const mainInvite = document.getElementById('main-invite');
             const audio = document.getElementById('bg-music');
             const playBtn = document.getElementById('play-music-btn');
             let isPlaying = false;
+            let autoScrollActive = false;
+            let scrollAnimationId = null;
+
+            // Función para detener el auto-scroll suavemente si el usuario interactúa
+            function stopAutoScroll() {
+                if (autoScrollActive) {
+                    autoScrollActive = false;
+                    cancelAnimationFrame(scrollAnimationId);
+                    
+                    // Remover los oyentes para evitar sobrecargar memoria
+                    window.removeEventListener('wheel', stopAutoScroll);
+                    window.removeEventListener('touchstart', stopAutoScroll);
+                    window.removeEventListener('pointerdown', stopAutoScroll);
+                    window.removeEventListener('keydown', stopAutoScroll);
+                }
+            }
+
+            // Función que realiza el auto-scroll de forma ultra suave
+            function startAutoScroll() {
+                autoScrollActive = true;
+                const scrollSpeed = 0.8; // Velocidad de píxeles por frame (muy lento e ideal para leer)
+
+                // Detectar cualquier interacción del usuario para detener el autoscroll
+                window.addEventListener('wheel', stopAutoScroll, { passive: true });
+                window.addEventListener('touchstart', stopAutoScroll, { passive: true });
+                window.addEventListener('pointerdown', stopAutoScroll, { passive: true });
+                window.addEventListener('keydown', stopAutoScroll, { passive: true });
+
+                function performScroll() {
+                    if (!autoScrollActive) return;
+
+                    // Detenerse si llega al final de la página
+                    if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 5) {
+                        stopAutoScroll();
+                        return;
+                    }
+
+                    window.scrollBy(0, scrollSpeed);
+                    scrollAnimationId = requestAnimationFrame(performScroll);
+                }
+
+                scrollAnimationId = requestAnimationFrame(performScroll);
+            }
 
             // Al hacer clic en el sobre
             introScreen.addEventListener('click', () => {
@@ -427,6 +470,9 @@
                     mainInvite.classList.remove('hide-section');
                     mainInvite.classList.add('animate-fade-in');
                     window.scrollTo(0,0);
+                    
+                    // Iniciar el scroll automático lento 1 segundo después de abrir el sobre
+                    setTimeout(startAutoScroll, 1000);
                 }, 1000);
             });
 
@@ -454,7 +500,7 @@
             }
 
             // Lógica de la Cuenta Regresiva (Objetivo: 27 de Junio de 2026)
-            const countDownDate = new Date("Jun 27, 2026 20:00:00").getTime();
+            const countDownDate = new Date("Jun 27, 2026 18:00:00").getTime();
 
             const timerInterval = setInterval(() => {
                 const now = new Date().getTime();
