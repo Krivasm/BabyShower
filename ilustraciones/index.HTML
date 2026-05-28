@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación Baby Shower - Aitana Sofía Barros Márquez</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Configuraciones de Fuentes y Colores Base */
+        :root {
+            --color-pink-main: #df8b96;
+            --color-pink-light: #fbe6e8;
+            --color-gold: #9c7145;
+            --color-gold-light: #cca978;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f5f5f5;
+            color: #4a4a4a;
+        }
+
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .font-script { font-family: 'Alex Brush', cursive; }
+        
+        .text-pink-custom { color: var(--color-pink-main); }
+        .bg-pink-custom { background-color: var(--color-pink-main); }
+        .border-pink-custom { border-color: var(--color-pink-main); }
+        
+        .text-gold-custom { color: var(--color-gold); }
+        .bg-gold-custom { background-color: var(--color-gold); }
+        .border-gold-custom { border-color: var(--color-gold); }
+
+        /* Contenedor principal de la invitación (Formato Móvil) */
+        .invite-container {
+            max-width: 420px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            background-image: url('data:image/svg+xml;utf8,<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="%23fce8eb"/></pattern></defs><rect width="100%" height="100%" fill="url(%23dots)"/></svg>');
+        }
+
+        /* Animaciones */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(3deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        @keyframes pulse-soft {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(223, 139, 150, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(223, 139, 150, 0); }
+        }
+
+        .animate-fade-in { animation: fadeIn 1s ease-out forwards; }
+        .animate-float { animation: float 4s ease-in-out infinite; }
+        .animate-pulse-soft { animation: pulse-soft 2s infinite; }
+
+        /* Estilos del Sobre (Pantalla de Inicio) */
+        .envelope-wrapper {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background-color: var(--color-pink-light);
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto;
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 110px solid var(--color-pink-main);
+            opacity: 0.8;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            z-index: 10;
+        }
+
+        .envelope-seal {
+            position: absolute;
+            z-index: 20;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, #cca978 0%, #9c7145 100%);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 2rem;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.3), 0 4px 6px rgba(0,0,0,0.2);
+            border: 2px solid #e0c39a;
+	    text-transform: uppercase;
+        }
+
+        /* Foto de arco */
+        .arch-photo {
+            width: 240px;
+            height: 320px;
+            border-radius: 120px 120px 0 0;
+            border: 5px solid var(--color-gold-light);
+            overflow: hidden;
+            margin: 0 auto;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        /* Elementos Decorativos (Mariposas y Destellos) */
+        .sparkle {
+            position: absolute;
+            color: var(--color-gold-light);
+            font-size: 1.2rem;
+        }
+        
+        .hide-section { display: none !important; }
+    </style>
+</head>
+<body class="antialiased selection:bg-pink-200 selection:text-pink-900">
+
+    <!-- PANTALLA 1: EL SOBRE (CUBIERTA) -->
+    <div id="intro-screen" class="invite-container flex flex-col justify-center items-center fixed inset-0 z-50 transition-opacity duration-1000 cursor-pointer bg-white/95 backdrop-blur-sm">
+        
+        <!-- Elementos florales superiores -->
+        <div class="absolute bottom-0 w-full opacity-60 pointer-events-none">
+            <img src="fondo.png" alt="Flores" class="w-full h-32 object-cover object-bottom" style="mask-image: linear-gradient(to bottom, black 0%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);">
+        </div>
+
+        <div class="text-center z-10 animate-fade-in">
+            <h1 class="font-serif text-5xl text-pink-custom tracking-widest mb-0">BABY</h1>
+            <h2 class="font-script text-7xl text-pink-custom opacity-80 -mt-6 mb-8">Shower</h2>
+        </div>
+
+        <div class="relative z-10 animate-float mb-4">
+            <!-- Imagen de conejita (Placeholder representativo de acuarela) -->
+            <img src="conejita 1.png" alt="Conejita" class="w-32 h-32 object-contain absolute -top-16 left-1/2 transform -translate-x-1/2 z-20">
+            
+            <div class="envelope-wrapper mt-12">
+                <div class="envelope-flap"></div>
+                <!-- Sello de Cera -->
+                <div class="envelope-seal font-script">A</div>
+            </div>
+        </div>
+
+        <p class="z-10 mt-8 text-gold-custom text-xs font-bold tracking-[0.2em] animate-pulse">DALE CLIC PARA VER LA INVITACIÓN</p>
+
+        <!-- Elementos florales inferiores -->
+        <div class="absolute top-0 w-full opacity-60 pointer-events-none">
+             <img src="fondo.png" alt="Flores base" class="w-full h-32 object-cover object-top" style="mask-image: linear-gradient(to bottom, black 0%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);">
+        </div>
+    </div>
+
+    <!-- PANTALLA 2: LA INVITACIÓN PRINCIPAL -->
+    <div id="main-invite" class="invite-container hide-section pb-20 bg-[url('fondo.png')] bg-center">
+        
+        <!-- Sección 1: Encabezado y Música -->
+        <section class="pt-10 px-6 relative text-center">
+            <span class="sparkle top-10 left-8 animate-float">✨</span>
+            <span class="sparkle top-20 right-10 text-pink-300 animate-float">✨</span>
+            
+            <div class="mb-8">
+                <p class="text-[10px] tracking-[0.2em] text-pink-custom font-semibold mb-3">DALE PLAY</p>
+                <button id="play-music-btn" class="w-12 h-12 rounded-full bg-pink-custom text-white flex justify-center items-center mx-auto shadow-lg animate-pulse-soft transition-transform hover:scale-110">
+                    <i data-lucide="play" class="w-5 h-5 ml-1"></i>
+                </button>
+                <audio id="bg-music" loop>
+                    <!-- Audio placeholder (Cuna/Lullaby) -->
+                    <source src="Carlos Rivera - La Mejor Canción.MP3" type="audio/mpeg">
+                </audio>
+            </div>
+
+            <!-- Título Principal con Conejita -->
+            <div class="flex items-center justify-center gap-2 mt-4 relative">
+                <!-- Mariposa decorativa -->
+                <div class="absolute -left-2 top-0 w-8 h-8 animate-float">
+                        <!-- Tu imagen de mariposa -->
+                        <img id="butterfly-img" src="mariposa grande1.png" alt="Mariposa" class="w-full h-full object-contain"
+                             onerror="this.style.display='none'; document.getElementById('butterfly-fallback').classList.remove('hidden');">
+                        
+                        <!-- El SVG original que actúa como respaldo si la imagen falla -->
+                        <svg id="butterfly-fallback" class="hidden w-full h-full text-purple-300" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C8 2 4 5 4 9c0 2.5 1.5 4.5 3.5 5.5C6.5 16 5 18 5 21l7-4 7 4c0-3-1.5-5-2.5-6.5C18.5 13.5 20 11.5 20 9c0-4-4-7-8-7zm0 13l-4 2.5c1-1.5 2-3.5 2-5.5 0-2 2-3 2-3s2 1 2 3c0 2 1 4 2 5.5L12 15z"/>
+                        </svg>
+			
+                </div>
+
+                <span class="font-serif text-[4rem] text-pink-custom leading-none">BA</span>
+                <img src="conejita flores.png" alt="Conejita Acuarela" class="w-28 h-28 object-contain shadow-sm z-10">
+                <span class="font-serif text-[4rem] text-pink-custom leading-none">BY</span>
+                <div class="absolute -right-4 bottom-0 w-6 h-6 text-pink-400 animate-float">
+                    <img id="butterfly-img1" src="mariposa grande 2.png" alt="Mariposa1" class="w-full h-full object-contain"
+                        onerror="this.style.display='none'; document.getElementById('butterfly-fallback1').classList.remove('hidden');">
+
+			<svg id="butterfly-fallback1" class="hidden -right-4 bottom-0 w-6 h-6 text-pink-400 animate-float" style="animation-delay: 1s;" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8 2 4 5 4 9c0 2.5 1.5 4.5 3.5 5.5C6.5 16 5 18 5 21l7-4 7 4c0-3-1.5-5-2.5-6.5C18.5 13.5 20 11.5 20 9c0-4-4-7-8-7zm0 13l-4 2.5c1-1.5 2-3.5 2-5.5 0-2 2-3 2-3s2 1 2 3c0 2 1 4 2 5.5L12 15z"/></svg>
+		</div>
+                
+            </div>
+		
+            <div class="text-center -mt-2">
+                <span class="font-serif text-5xl text-pink-custom tracking-widest">GIRL</span>
+            </div>
+
+            <!-- Nombres -->
+            <div class="mt-12 mb-8">
+                <p class="text-gold-custom text-xs font-bold tracking-[0.2em] mb-2">TE INVITO A MI</p>
+                <h3 class="font-serif text-3xl text-gold-custom tracking-wider">BABY SHOWER</h3>
+                <div class="relative mt-2">
+                    <span class="sparkle left-4 top-4 text-pink-400">✨</span>
+                    <h1 class="font-script text-[4.5rem] text-pink-custom leading-[3.8rem]">
+                        Aitana Sofía Barros Márquez
+                    </h1>
+                    <div class="absolute inset-x-0 bottom-0 flex justify-center pointer-events-none">
+                        <img id="mariposa-img" src="mariposa grande 2.png" alt="Liston" class="absolute right-2 -bottom-4 w-20 h-20 text-yellow-500 animate-float" style="animation-delay: 2s;">
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 2: Foto y Mensaje -->
+        <section class="px-6 relative text-center">
+            <!-- Dibujo de Corazón -->
+            <svg class="absolute left-0 top-20 w-16 h-16 text-pink-300 opacity-60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+            
+            <svg class="absolute right-0 bottom-10 w-16 h-16 text-pink-300 opacity-60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+
+            <!-- Foto de los papás -->
+            <div class="arch-photo">
+                <img src="padres.jpeg" alt="Futuros Papás" class="w-full h-full object-cover">
+            </div>
+
+            <div class="mt-8">
+                <p class="text-gold-custom text-xs font-bold tracking-[0.2em]">MIS PAPITOS</p>
+                <h2 class="font-script text-[3.5rem] text-pink-custom mt-2 leading-none">Miguel & Wendy</h2>
+                <span class="sparkle right-10 mt-2 animate-float">✨</span>
+            </div>
+
+            <p class="mt-6 text-sm text-gray-700 italic font-serif px-4 leading-relaxed font-semibold">
+                "Mientras Dios termina de formarme en la pancita de mi mami, ya estoy iluminando cada rincón de sus corazones de mis papitos y esperan felices mi llegada."
+            </p>
+        </section>
+
+        <!-- Sección 3: Detalles del Evento -->
+        <section class="mt-14 px-6 text-center">
+            <p class="text-pink-custom text-xs font-bold tracking-[0.15em] mb-6">ACOMPÁÑANOS A CELEBRAR EL DÍA</p>
+            
+            <h3 class="font-serif text-2xl text-gold-custom tracking-widest font-bold mb-4">SÁBADO</h3>
+            
+            <div class="flex justify-center items-center gap-24 font-serif text-gold-custom text-xl border-t border-b border-pink-200 py-3 mx-4 relative">
+    
+                <!-- Div del texto izquierdo limpio -->
+                <div>JUNIO 27</div>
+                
+                <!-- Moño decorativo al centro (no le afecta el gap por ser absolute) -->
+                <div class="absolute inset-x-0 bottom-0 flex justify-center pointer-events-none">
+                    <img id="Lazo-img" src="liston.png" alt="Liston" class="w-20 h-20 object-contain">
+                </div>
+                
+                <!-- Div del texto derecho limpio -->
+                <div>6:00 P.M.</div>
+
+            </div>
+
+            <div class="mt-10">
+                <p class="text-gold-custom text-xs font-bold tracking-[0.2em] mb-4">LUGAR DEL EVENTO.</p>
+                <!-- Botón Google Maps -->
+                <a href="https://maps.app.goo.gl/vos1yyoPUvyNreZV7" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 w-4/5 mx-auto bg-pink-300 hover:bg-pink-400 text-white py-3 px-6 rounded-lg font-serif text-lg tracking-widest transition-colors shadow-md border border-pink-200">
+                    <i data-lucide="map-pin" class="w-5 h-5 text-gold-custom"></i>
+                    <span class="underline decoration-1 underline-offset-4">GOOGLE MAPS</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Sección 4: Cuenta Regresiva -->
+        <section class="mt-16 px-6 text-center relative">
+            <span class="sparkle left-6 top-0">✨</span>
+            <span class="sparkle right-12 bottom-2 text-pink-300">✨</span>
+
+            <h3 class="font-script text-[3.5rem] text-gold-custom mb-[-15px]">Cuenta</h3>
+            <h4 class="font-serif text-2xl text-pink-custom tracking-[0.3em] mb-8 font-light">REGRESIVA</h4>
+
+            <div class="flex justify-center items-start gap-4 font-serif text-4xl text-pink-custom px-4">
+                <div class="flex flex-col items-center w-16">
+                    <span id="days" class="mb-1 text-5xl">0</span>
+                    <span class="text-[9px] text-pink-300 font-sans tracking-widest uppercase">Días</span>
+                </div>
+                <span class="text-2xl mt-2">:</span>
+                <div class="flex flex-col items-center w-16">
+                    <span id="hours" class="mb-1 text-5xl">0</span>
+                    <span class="text-[9px] text-pink-300 font-sans tracking-widest uppercase">Horas</span>
+                </div>
+                <span class="text-2xl mt-2">:</span>
+                <div class="flex flex-col items-center w-16">
+                    <span id="mins" class="mb-1 text-5xl">0</span>
+                    <span class="text-[9px] text-pink-300 font-sans tracking-widest uppercase">Minutos</span>
+                </div>
+                <span class="text-2xl mt-2">:</span>
+                <div class="flex flex-col items-center w-16">
+                    <span id="secs" class="mb-1 text-5xl text-gold-custom font-bold">0</span>
+                    <span class="text-[9px] text-pink-300 font-sans tracking-widest uppercase">Segundos</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 5: Calendario y Confirmación -->
+        <section class="mt-16 px-8 relative">
+            
+            <!-- Botón de Confirmación -->
+           <div class="mt-16 text-center">
+                <h3 class="font-serif text-3xl text-gold-custom mb-6">CONFIRMAR<br>ASISTENCIA:</h3>
+                
+                <!-- Contenedor alineador: une la conejita y el botón de WhatsApp con sus posiciones intercambiadas -->
+                <div class="flex items-center justify-center gap-4 mb-8 relative">
+
+                    <img id="conejita-img" src="conejita 4.png" alt="conejita 4" class="w-24 h-24 object-contain" style="animation-delay: 1.5s;">
+
+                    <a href="https://api.whatsapp.com/send?phone=573135111461&text=%C2%A1Estare%20encantado%20de%20acompa%C3%B1arte%21" target="_blank" rel="noopener noreferrer" class="inline-flex justify-center items-center w-20 h-20 bg-pink-custom rounded-full text-white shadow-xl hover:scale-105 transition-transform">
+                        <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.161.453-.834.864-1.176.906-.328.042-.647.114-2.12-.486-1.785-.728-2.92-2.528-3.007-2.643-.088-.115-.717-.954-.717-1.82 0-.865.45-1.293.612-1.459.162-.167.35-.208.468-.208.118 0 .237.001.341.006.108.006.253-.042.395.297.144.341.492 1.205.535 1.293.044.088.072.192.014.307-.058.115-.088.188-.175.292-.088.104-.183.224-.262.315-.088.099-.18.204-.078.381.102.177.453.75 1.053 1.246.776.643 1.343.834 1.52.928.177.094.281.083.385-.036.104-.12.453-.526.577-.708.124-.182.247-.152.408-.094.162.058 1.025.484 1.201.573.176.088.293.136.336.214.043.078.043.453-.118.906z"/></svg>
+                    </a>
+                </div>
+                
+                <p class="text-xs text-gray-700 italic font-serif leading-relaxed px-4 mb-6">
+                    "Nos encantará saber que nos acompañarás, permítenos preparar los detalles confirmando tu asistencia."
+                </p>
+
+                
+            </div>
+        </section>
+
+        <!-- Sección 6: Regalo -->
+        <section class="mt-16 px-6 relative pb-10">
+            <!-- Icono Decorativo Clip -->
+            <div class="absolute right-8 top-[-10px] z-10 text-pink-300">
+                <i data-lucide="paperclip" class="w-10 h-10 transform rotate-45"></i>
+            </div>
+            
+            <div class="border-2 border-pink-200 bg-pink-50 p-8 text-center relative z-0">
+                <h3 class="font-serif text-4xl text-gold-custom mb-6 tracking-wide">REGALO</h3>
+                
+                <div class="flex justify-center mb-10 text-gold-custom">
+                    <i data-lucide="gift" class="w-20 h-20" stroke-width="1.5"></i>
+                </div>
+                
+                <!-- Cinta con texto -->
+                <div class="absolute -bottom-5 left-1/2 transform -translate-x-1/2 w-11/12 bg-pink-300 text-white py-3 px-4 rounded shadow-md">
+                    <p class="text-xs font-serif leading-relaxed">
+                        Su presencia es el mejor regalo.<br>
+                        
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer Decorativo -->
+        <footer class="mt-16 px-6 flex justify-between items-end relative h-40">
+            <!-- Carruaje de bebé (Placeholder SVG) -->
+            <div class="w-1/2 text-left relative z-10">
+                <p class="font-script text-3xl text-pink-custom mb-2 -rotate-6">Guarda la<br>fecha!</p>
+                <img src="conejita 2.png" alt="Flores decorativas" class="w-24 h-24 object-contain shadow-sm mask-image-bottom">
+            </div>
+
+            <!-- Huellas y Fecha -->
+            <div class="w-1/2 text-right relative z-10">
+                <h3 class="font-serif text-3xl text-gold-custom">JUNIO</h3>
+                <div class="flex justify-end items-center gap-2">
+                    <!-- Huellas de bebé -->
+                    <i data-lucide="footprints" class="w-8 h-8 text-pink-300 transform -rotate-12"></i>
+                    <span class="font-serif text-[4rem] text-pink-custom leading-none">27</span>
+                </div>
+                
+            </div>
+            
+            <!-- Césped/Flores fondo footer -->
+             <div class="absolute bottom-0 left-0 w-full opacity-40 pointer-events-none z-0">
+                <img src="fondo.png" alt="Césped" class="w-full h-24 object-cover object-bottom" style="mask-image: linear-gradient(to top, black 0%, transparent 100%); -webkit-mask-image: linear-gradient(to top, black 0%, transparent 100%);">
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // Inicializar Iconos Lucide
+        lucide.createIcons();
+
+        // Lógica de apertura del sobre
+        document.addEventListener('DOMContentLoaded', () => {
+            const introScreen = document.getElementById('intro-screen');
+            const mainInvite = document.getElementById('main-invite');
+            const audio = document.getElementById('bg-music');
+            const playBtn = document.getElementById('play-music-btn');
+            let isPlaying = false;
+
+            // Al hacer clic en el sobre
+            introScreen.addEventListener('click', () => {
+                introScreen.style.opacity = '0';
+                
+                // Intentar reproducir música automáticamente al interactuar
+                audio.volume = 0.5;
+                audio.play().then(() => {
+                    isPlaying = true;
+                    updatePlayButtonIcon();
+                }).catch(e => console.log("Auto-play prevented"));
+
+                setTimeout(() => {
+                    introScreen.classList.add('hide-section');
+                    mainInvite.classList.remove('hide-section');
+                    mainInvite.classList.add('animate-fade-in');
+                    window.scrollTo(0,0);
+                }, 1000);
+            });
+
+            // Control manual de música
+            playBtn.addEventListener('click', () => {
+                if (isPlaying) {
+                    audio.pause();
+                } else {
+                    audio.play();
+                }
+                isPlaying = !isPlaying;
+                updatePlayButtonIcon();
+            });
+
+            function updatePlayButtonIcon() {
+                playBtn.innerHTML = isPlaying 
+                    ? '<i data-lucide="pause" class="w-5 h-5"></i>' 
+                    : '<i data-lucide="play" class="w-5 h-5 ml-1"></i>';
+                lucide.createIcons();
+                if(isPlaying) {
+                    playBtn.classList.remove('animate-pulse-soft');
+                } else {
+                    playBtn.classList.add('animate-pulse-soft');
+                }
+            }
+
+            // Lógica de la Cuenta Regresiva (Objetivo: 27 de Junio de 2026)
+            const countDownDate = new Date("Jun 27, 2026 20:00:00").getTime();
+
+            const timerInterval = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = countDownDate - now;
+
+                if (distance < 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById("days").innerHTML = "0";
+                    document.getElementById("hours").innerHTML = "0";
+                    document.getElementById("mins").innerHTML = "0";
+                    document.getElementById("secs").innerHTML = "0";
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Formatear a dos dígitos si es menor a 10
+                document.getElementById("days").innerHTML = days;
+                document.getElementById("hours").innerHTML = hours < 10 ? "0" + hours : hours;
+                document.getElementById("mins").innerHTML = minutes < 10 ? "0" + minutes : minutes;
+                document.getElementById("secs").innerHTML = seconds < 10 ? "0" + seconds : seconds;
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
